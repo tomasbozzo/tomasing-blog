@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Tomasing.com</title>
     <meta charset="utf-8">
@@ -34,19 +34,17 @@
 
 <div class="container" style="margin-top:80px">
     <div class="row">
-        <div class="col-sm-12">
-            <h2>TITLE HEADING</h2>
-            <h5>Title description, Dec 7, 2017</h5>
-            <div class="fakeimg">Fake Image</div>
-            <p>Some text..</p>
-            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-            <br>
-
-            <h2>TITLE HEADING</h2>
-            <h5>Title description, Sep 2, 2017</h5>
-            <div class="fakeimg">Fake Image</div>
-            <p>Some text..</p>
-            <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+        <div th:each="post : ${posts}" class="col-sm-12">
+            <div>
+                <h2><a th:text="${post.title}" class="text-body" href="#">TITLE HEADING</a></h2>
+                <div th:utext="${post.content}">
+                    The content
+                </div>
+                <div>
+                    <a class="float-right" href="#">Read the full story</a>
+                    <span th:text="${'Created by ' + post.createdBy}">Created by user</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
