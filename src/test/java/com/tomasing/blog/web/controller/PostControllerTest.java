@@ -10,35 +10,38 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.stream.Stream;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(HomeController.class)
-public class HomeControllerTest {
+@WebMvcTest(PostController.class)
+public class PostControllerTest {
+
+    private static final String CATEGORY = "category";
+    private static final String SLUG = "slug";
+    @MockBean
+    private PostService postService;
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private PostService postService;
-
     @Test
-    public void testHome() throws Exception {
+    public void testGetPost() throws Exception {
         // Given
-        Stream<Post> posts = createPosts();
-        when(postService.findAll()).thenReturn(posts);
+        when(postService.findByCategoryAndSlug(CATEGORY, SLUG))
+                .thenReturn(Optional.of(Post.builder().build()));
 
         // When
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/category/slug"))
                 .andExpect(status().isOk());
     }
 
-    private Stream<Post> createPosts() {
-        return Stream.of(Post.builder()
-                .build());
+    @Test
+    public void testGetPostNotFound() throws Exception {
+        mockMvc.perform(get("/category/slug"))
+                .andExpect(status().isNotFound());
     }
 }

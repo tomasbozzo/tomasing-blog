@@ -12,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,6 +25,7 @@ public class PostServiceImplTest {
     private static final Long ID = 1L;
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
+    private static final String CATEGORY = "category";
     private static final String SLUG = "slug";
     private static final ZonedDateTime CREATE_DATE = ZonedDateTime.now();
     private static final String CREATED_BY = "createdBy";
@@ -39,37 +41,75 @@ public class PostServiceImplTest {
     @Test
     public void testGetPosts() {
         // Given
-        Iterable<PostEntity> posts = createPosts();
+        Iterable<PostEntity> posts = createPostsEntities();
         when(postRepository.findAll()).thenReturn(posts);
 
         // When
-        Stream<Post> result = postService.getPosts();
+        Stream<Post> result = postService.findAll();
 
-        // When
+        // Then
         List<Post> resultList = result.collect(Collectors.toList());
         assertThat(resultList.size()).isEqualTo(1);
-        assertThat(resultList).first().isEqualTo(Post.builder()
-                .id(ID)
-                .title(TITLE)
-                .content(CONTENT)
-                .slug(SLUG)
-                .createDate(CREATE_DATE)
-                .createdBy(CREATED_BY)
-                .updateDate(UPDATE_DATE)
-                .updatedBy(UPDATED_BY)
-                .build());
+        assertThat(resultList).first().isEqualTo(createPost());
     }
 
-    private Iterable<PostEntity> createPosts() {
-        return Collections.singletonList(PostEntity.builder()
+    @Test
+    public void testGetPost() {
+        // Given
+        Optional<PostEntity> postEntity = Optional.of(createPostEntity());
+        when(postRepository.findByCategoryAndSlug(CATEGORY, SLUG)).thenReturn(postEntity);
+
+        // When
+        Optional<Post> result = postService.findByCategoryAndSlug(CATEGORY, SLUG);
+
+        // Then
+        assertThat(result)
+                .isNotEmpty()
+                .contains(createPost());
+    }
+
+    @Test
+    public void testGetPostNotFound() {
+        // Given
+        Optional<PostEntity> postEntity = Optional.empty();
+        when(postRepository.findByCategoryAndSlug(CATEGORY, SLUG)).thenReturn(postEntity);
+
+        // When
+        Optional<Post> result = postService.findByCategoryAndSlug(CATEGORY, SLUG);
+
+        // Then
+        assertThat(result).isEmpty();
+    }
+
+    private Iterable<PostEntity> createPostsEntities() {
+        return Collections.singletonList(createPostEntity());
+    }
+
+    private Post createPost() {
+        return Post.builder()
                 .id(ID)
                 .title(TITLE)
+                .category(CATEGORY)
                 .content(CONTENT)
                 .slug(SLUG)
                 .createDate(CREATE_DATE)
                 .createdBy(CREATED_BY)
                 .updateDate(UPDATE_DATE)
                 .updatedBy(UPDATED_BY)
-                .build());
+                .build();
+    }
+
+    private PostEntity createPostEntity() {
+        return PostEntity.builder()
+                .id(ID)
+                .title(TITLE)
+                .category(CATEGORY)
+                .content(CONTENT)
+                .slug(SLUG)
+                .createDate(CREATE_DATE)
+                .createdBy(CREATED_BY)
+                .updateDate(UPDATE_DATE)
+                .updatedBy(UPDATED_BY)
+                .build();
     }
 }

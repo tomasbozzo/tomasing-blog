@@ -3,12 +3,14 @@ package com.tomasing.blog.service.model;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.ZonedDateTime;
 
 @Getter
 @Builder
 @EqualsAndHashCode
+@ToString
 public class Post {
     private final Long id;
     private final String title;

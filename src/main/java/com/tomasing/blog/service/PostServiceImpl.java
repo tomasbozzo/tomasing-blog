@@ -5,6 +5,7 @@ import com.tomasing.blog.repository.model.PostEntity;
 import com.tomasing.blog.service.model.Post;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -18,8 +19,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Stream<Post> getPosts() {
+    public Stream<Post> findAll() {
         return StreamSupport.stream(postRepository.findAll().spliterator(), false)
+                .map(this::toPost);
+    }
+
+    @Override
+    public Optional<Post> findByCategoryAndSlug(String category, String slug) {
+        return postRepository.findByCategoryAndSlug(category, slug)
                 .map(this::toPost);
     }
 
@@ -28,6 +35,7 @@ public class PostServiceImpl implements PostService {
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
+                .category(post.getCategory())
                 .slug(post.getSlug())
                 .createDate(post.getCreateDate())
                 .createdBy(post.getCreatedBy())
