@@ -20,7 +20,7 @@ public class HomeController {
 
     @GetMapping
     public String get(Model model) {
-        model.addAttribute("posts", postService.getPosts().collect(toList()));
+        model.addAttribute("posts", postService.findAll().collect(toList()));
         return "home";
     }
 }
