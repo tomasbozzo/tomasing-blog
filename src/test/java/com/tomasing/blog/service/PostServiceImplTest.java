@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PostServiceImplTest {
 
-    private static final Long ID = 1L;
+    private static final String ID = "id";
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
     private static final String CATEGORY = "category";

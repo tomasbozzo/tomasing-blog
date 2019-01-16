@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 @EqualsAndHashCode
 @ToString
 public class Post {
-    private final Long id;
+    private final String id;
     private final String title;
     private final String content;
     private final String slug;
