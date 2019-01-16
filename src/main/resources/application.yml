@@ -1,7 +1,13 @@
 spring:
-  h2:
-    console:
-      enabled: true
   mvc:
     locale: en_US
     locale-resolver: fixed
+
+google:
+  cloud:
+    projectId:
+    credentials:
+      clientId:
+      clientEmail:
+      privateKey:
+      privateKeyId:
