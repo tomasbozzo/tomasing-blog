@@ -26,6 +26,10 @@ public class PostFirestoreRepository implements PostRepository {
     private static final String CONTENT_FIELD = "content";
     private static final String CREATED_BY_FIELD = "createdBy";
     private static final String CREATE_DATE_FIELD = "createDate";
+    private static final String PUBLISHED_BY_FIELD = "publishedBy";
+    private static final String PUBLICATION_DATE_FIELD = "publicationDate";
+    private static final String UPDATED_BY_FIELD = "updatedBy";
+    private static final String UPDATE_DATE_FIELD = "updateDate";
 
     private final Firestore firestore;
 
@@ -65,8 +69,12 @@ public class PostFirestoreRepository implements PostRepository {
                 .category(document.getString(CATEGORY_FIELD))
                 .slug(document.getString(SLUG_FIELD))
                 .content(document.getString(CONTENT_FIELD))
+                .publishedBy(document.getString(PUBLISHED_BY_FIELD))
+                .publicationDate(toZonedDateTime(document.getDate(PUBLICATION_DATE_FIELD)))
                 .createdBy(document.getString(CREATED_BY_FIELD))
                 .createDate(toZonedDateTime(document.getDate(CREATE_DATE_FIELD)))
+                .updatedBy(document.getString(UPDATED_BY_FIELD))
+                .updateDate(toZonedDateTime(document.getDate(UPDATE_DATE_FIELD)))
                 .build();
     }
 

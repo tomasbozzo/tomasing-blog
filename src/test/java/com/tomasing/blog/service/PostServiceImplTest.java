@@ -31,6 +31,8 @@ public class PostServiceImplTest {
     private static final String CREATED_BY = "createdBy";
     private static final ZonedDateTime UPDATE_DATE = ZonedDateTime.now();
     private static final String UPDATED_BY = "updatedBy";
+    private static final String PUBLISHED_BY = "publishedBy";
+    private static final ZonedDateTime PUBLICATION_DATE = ZonedDateTime.now();
 
     @Mock
     private PostRepository postRepository;
@@ -92,10 +94,8 @@ public class PostServiceImplTest {
                 .category(CATEGORY)
                 .content(CONTENT)
                 .slug(SLUG)
-                .createDate(CREATE_DATE)
-                .createdBy(CREATED_BY)
-                .updateDate(UPDATE_DATE)
-                .updatedBy(UPDATED_BY)
+                .publishedBy(PUBLISHED_BY)
+                .publicationDate(PUBLICATION_DATE)
                 .build();
     }
 
@@ -106,6 +106,8 @@ public class PostServiceImplTest {
                 .category(CATEGORY)
                 .content(CONTENT)
                 .slug(SLUG)
+                .publicationDate(PUBLICATION_DATE)
+                .publishedBy(PUBLISHED_BY)
                 .createDate(CREATE_DATE)
                 .createdBy(CREATED_BY)
                 .updateDate(UPDATE_DATE)

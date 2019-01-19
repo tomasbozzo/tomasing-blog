@@ -37,10 +37,8 @@ public class PostServiceImpl implements PostService {
                 .content(post.getContent())
                 .category(post.getCategory())
                 .slug(post.getSlug())
-                .createDate(post.getCreateDate())
-                .createdBy(post.getCreatedBy())
-                .updateDate(post.getUpdateDate())
-                .updatedBy(post.getUpdatedBy())
+                .publishedBy(post.getPublishedBy())
+                .publicationDate(post.getPublicationDate())
                 .build();
     }
 }

@@ -1,18 +1,18 @@
-package com.tomasing.blog.service.model;
+package com.tomasing.blog.web.model;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.time.ZonedDateTime;
 
 @Getter
 @Builder
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
-public class Post {
-    private final String id;
+public class PostResource extends ResourceSupport {
     private final String title;
     private final String content;
     private final String slug;

@@ -3,6 +3,7 @@ spring:
     locale: en_US
     locale-resolver: fixed
 
+
 google:
   cloud:
     projectId:
@@ -11,3 +12,6 @@ google:
       clientEmail:
       privateKey:
       privateKeyId:
+server:
+  servlet:
+    context-path: /api

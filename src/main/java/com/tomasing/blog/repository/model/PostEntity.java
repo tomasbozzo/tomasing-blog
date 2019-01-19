@@ -9,16 +9,16 @@ import java.time.ZonedDateTime;
 
 @Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class PostEntity {
-    private String id;
-    private String title;
-    private String content;
-    private String slug;
-    private String category;
-    private String createdBy;
-    private ZonedDateTime createDate;
-    private String updatedBy;
-    private ZonedDateTime updateDate;
+    private final String id;
+    private final String title;
+    private final String content;
+    private final String slug;
+    private final String category;
+    private final String createdBy;
+    private final String publishedBy;
+    private final ZonedDateTime publicationDate;
+    private final ZonedDateTime createDate;
+    private final String updatedBy;
+    private final ZonedDateTime updateDate;
 }
