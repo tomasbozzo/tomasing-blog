@@ -17,8 +17,6 @@ public class Post {
     private final String content;
     private final String slug;
     private final String category;
-    private final String createdBy;
-    private final ZonedDateTime createDate;
-    private final String updatedBy;
-    private final ZonedDateTime updateDate;
+    private final String publishedBy;
+    private final ZonedDateTime publicationDate;
 }

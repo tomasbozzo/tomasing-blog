@@ -3,11 +3,3 @@ spring:
     locale: en_US
     locale-resolver: fixed
 
-google:
-  cloud:
-    projectId:
-    credentials:
-      clientId:
-      clientEmail:
-      privateKey:
-      privateKeyId:
