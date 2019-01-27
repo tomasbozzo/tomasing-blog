@@ -1,14 +1,16 @@
 package com.tomasing.blog.repository.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.ZonedDateTime;
 
 @Getter
 @Builder
+@ToString
+@EqualsAndHashCode
 public class PostEntity {
     private final String id;
     private final String title;
