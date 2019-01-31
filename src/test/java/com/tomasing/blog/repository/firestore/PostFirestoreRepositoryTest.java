@@ -25,8 +25,11 @@ import static org.mockito.Mockito.when;
 public class PostFirestoreRepositoryTest {
 
     private static final String POSTS_COLLECTION = "posts";
+    private static final String CATEGORY_FIELD = "category";
     private static final String CATEGORY = "category";
+    private static final String SLUG_FIELD = "slug";
     private static final String SLUG = "slug";
+    private static final String PUBLICATION_DATE_FIELD = "publicationDate";
 
     @Mock
     private Firestore firestore;
@@ -52,10 +55,16 @@ public class PostFirestoreRepositoryTest {
     @Test
     public void testFindAll() throws ExecutionException, InterruptedException {
         // Arrange
-        when(firestore.collection(POSTS_COLLECTION)).thenReturn(collectionReference);
-        when(collectionReference.get()).thenReturn(apiFuture);
-        when(apiFuture.get()).thenReturn(querySnapshot);
-        when(querySnapshot.getDocuments()).thenReturn(singletonList(queryDocumentSnapshot));
+        when(firestore.collection(POSTS_COLLECTION))
+                .thenReturn(collectionReference);
+        when(collectionReference.orderBy(PUBLICATION_DATE_FIELD, Query.Direction.DESCENDING))
+                .thenReturn(collectionReference);
+        when(collectionReference.get())
+                .thenReturn(apiFuture);
+        when(apiFuture.get())
+                .thenReturn(querySnapshot);
+        when(querySnapshot.getDocuments())
+                .thenReturn(singletonList(queryDocumentSnapshot));
 
         // Act
         Stream<PostEntity> result = repository.findAll();
@@ -67,8 +76,12 @@ public class PostFirestoreRepositoryTest {
     @Test
     public void testFindAllException() throws ExecutionException, InterruptedException {
         // Arrange
-        when(firestore.collection(POSTS_COLLECTION)).thenReturn(collectionReference);
-        when(collectionReference.get()).thenReturn(apiFuture);
+        when(firestore.collection(POSTS_COLLECTION))
+                .thenReturn(collectionReference);
+        when(collectionReference.orderBy(PUBLICATION_DATE_FIELD, Query.Direction.DESCENDING))
+                .thenReturn(collectionReference);
+        when(collectionReference.get())
+                .thenReturn(apiFuture);
 
         Exception exception = new InterruptedException();
         when(apiFuture.get()).thenThrow(exception);
@@ -84,8 +97,8 @@ public class PostFirestoreRepositoryTest {
     public void testFindByCategoryAndSlug() throws ExecutionException, InterruptedException {
         // Arrange
         when(firestore.collection(POSTS_COLLECTION)).thenReturn(collectionReference);
-        when(collectionReference.whereEqualTo("category", CATEGORY)).thenReturn(query);
-        when(query.whereEqualTo("slug", SLUG)).thenReturn(query);
+        when(collectionReference.whereEqualTo(CATEGORY_FIELD, CATEGORY)).thenReturn(query);
+        when(query.whereEqualTo(SLUG_FIELD, SLUG)).thenReturn(query);
         when(query.get()).thenReturn(apiFuture);
         when(apiFuture.get()).thenReturn(querySnapshot);
         when(querySnapshot.getDocuments()).thenReturn(singletonList(queryDocumentSnapshot));
@@ -101,8 +114,8 @@ public class PostFirestoreRepositoryTest {
     public void testFindByCategoryAndSlugNotFound() throws ExecutionException, InterruptedException {
         // Arrange
         when(firestore.collection(POSTS_COLLECTION)).thenReturn(collectionReference);
-        when(collectionReference.whereEqualTo("category", CATEGORY)).thenReturn(query);
-        when(query.whereEqualTo("slug", SLUG)).thenReturn(query);
+        when(collectionReference.whereEqualTo(CATEGORY_FIELD, CATEGORY)).thenReturn(query);
+        when(query.whereEqualTo(SLUG_FIELD, SLUG)).thenReturn(query);
         when(query.get()).thenReturn(apiFuture);
         when(apiFuture.get()).thenReturn(querySnapshot);
         when(querySnapshot.getDocuments()).thenReturn(emptyList());
