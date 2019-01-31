@@ -22,6 +22,8 @@ public class PostServiceImplTest {
 
     private static final String CATEGORY = "category";
     private static final String SLUG = "slug";
+    private static final String CONTENT_WITH_EXCERPT = "content with <!--more--> excerpt";
+    private static final String STRIPPED_CONTENT = "content with ";
 
     @Mock
     private PostRepository postRepository;
@@ -42,6 +44,23 @@ public class PostServiceImplTest {
         List<Post> resultList = result.collect(Collectors.toList());
         assertThat(resultList.size()).isEqualTo(1);
         assertThat(resultList).first().isNotNull();
+    }
+
+    @Test
+    public void testGetPostsStrippedContent() {
+        // Arrange
+        when(postRepository.findAll())
+                .thenReturn(Stream.of(PostEntity.builder().content(CONTENT_WITH_EXCERPT).build()));
+
+        // Act
+        Stream<Post> result = postService.findAll();
+
+        // Assert
+        List<Post> resultList = result.collect(Collectors.toList());
+        assertThat(resultList.size()).isEqualTo(1);
+        assertThat(resultList).first()
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("content", STRIPPED_CONTENT);
     }
 
     @Test
