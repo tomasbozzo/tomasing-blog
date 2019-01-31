@@ -2,4 +2,5 @@ spring:
   mvc:
     locale: en_US
     locale-resolver: fixed
-
+  jmx:
+    enabled: false
