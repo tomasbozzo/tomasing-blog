@@ -1,5 +1,6 @@
 package com.tomasing.blog.repository.mappers;
 
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.tomasing.blog.repository.model.PostEntity;
 import org.junit.Test;
@@ -40,11 +41,11 @@ public class PostEntityMapperTest {
         when(document.getString("slug")).thenReturn(SLUG);
         when(document.getString("category")).thenReturn(CATEGORY);
         when(document.getString("publishedBy")).thenReturn(PUBLISHED_BY);
-        when(document.get("publicationDate")).thenReturn(Date.from(PUBLICATION_DATE.toInstant()));
+        when(document.get("publicationDate")).thenReturn(Timestamp.of(Date.from(PUBLICATION_DATE.toInstant())));
         when(document.getString("createdBy")).thenReturn(CREATED_BY);
-        when(document.get("createDate")).thenReturn(Date.from(CREATE_DATE.toInstant()));
+        when(document.get("createDate")).thenReturn(Timestamp.of(Date.from(CREATE_DATE.toInstant())));
         when(document.getString("updatedBy")).thenReturn(UPDATED_BY);
-        when(document.get("updateDate")).thenReturn(Date.from(UPDATE_DATE.toInstant()));
+        when(document.get("updateDate")).thenReturn(Timestamp.of(Date.from(UPDATE_DATE.toInstant())));
 
         // Act
         PostEntity result = PostEntityMapper.toPostEntity(document);
